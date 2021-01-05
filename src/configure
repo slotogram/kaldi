@@ -830,7 +830,7 @@ auto_lib=             # Deduced lib name, used when $MATHLIB is not set.
 
 # Validate the (optionally) provided MATHLIB value.
 case $MATHLIB in
-  ''|ATLAS|CLAPACK|MKL|OPENBLAS) : ;;
+  ''|ATLAS|CLAPACK|MKL|OPENBLAS|OPENBLAS_CLAPACK) : ;;
   *) failure "Unknown --mathlib='${MATHLIB}'. Supported libs: ATLAS CLAPACK MKL OPENBLAS" ;;
 esac
 
@@ -1285,6 +1285,62 @@ or try another math library, e.g. --mathlib=OPENBLAS (Kaldi may be slower)."
       echo "Configuring dynamically loaded OpenBlas since --static-math=no (the default)"
       OPENBLASLIBS="-L$OPENBLASLIBDIR -lopenblas -lgfortran -Wl,-rpath=$OPENBLASLIBDIR"
     fi
+    echo "OPENBLASINC = $OPENBLASINCDIR" >> kaldi.mk
+    echo "OPENBLASLIBS = $OPENBLASLIBS" >> kaldi.mk
+    echo >> kaldi.mk
+    case $TARGET_ARCH in
+      aarch64*) cat makefiles/linux_openblas_aarch64.mk ;;
+      arm*)     cat makefiles/linux_openblas_arm.mk ;;
+      ppc64le)  cat makefiles/linux_openblas_ppc64le.mk ;;
+      *)        cat makefiles/linux_openblas.mk ;;
+    esac >> kaldi.mk
+
+    echo "Successfully configured for Linux with OpenBLAS from $OPENBLASROOT"
+  elif [ "$MATHLIB" == "OPENBLAS_CLAPACK" ]; then
+    if [[ ! $OPENBLASROOT ]]; then
+      # Either the user specified --mathlib=OPENBLAS or we've autodetected the
+      # system where OpenBLAS is the preferred option (the parser for
+      # --openblas-root fails fatally if the path does not exist, so we trust
+      # that if set, the variable contains the existing path, converted to
+      # absolute form).
+      OPENBLASROOT="$(rel2abs ../tools/OpenBLAS/install)" ||
+        Die "OpenBLAS not found in '../tools/OpenBLAS/install'.
+** This is the only place we look for it. The best option is to build OpenBLAS
+** tuned for your system and CPU. To do that, run the following commands:
+**
+**   cd ../tools; extras/install_openblas.sh
+**
+** Another option is to specify the location of existing OpenBLAS directory
+** with the switch '--openblas-root='. However, even if a package is provided
+** for your system, the packaged version is almost always significantly slower
+** and often older than the above commands can fetch and build.
+**
+** You can also use other matrix algebra libraries. For information, see:
+**   http://kaldi-asr.org/doc/matrixwrap.html"
+    fi
+    if [ -f $OPENBLASROOT/lib/libopenblas.so ]; then
+      OPENBLASLIBDIR=$OPENBLASROOT/lib
+    elif [ -f $OPENBLASROOT/lib64/libopenblas.so ]; then
+      # in REDHAT/CentOS package installs, the library is located here
+      OPENBLASLIBDIR=$OPENBLASROOT/lib64
+    else
+      failure "Expected to find the file $OPENBLASROOT/lib/libopenblas.so"
+    fi
+    if [ -f $OPENBLASROOT/include/cblas.h ] ; then
+      OPENBLASINCDIR=$OPENBLASROOT/include
+    elif [ -f $OPENBLASROOT/include/openblas/cblas.h ] ; then
+      # in REDHAT/CentOS/Ubuntu package installs, the includes are located here
+      OPENBLASINCDIR=$OPENBLASROOT/include/openblas
+    else
+      echo "$0: ***** Using OpenBLAS from $OPENBLASROOT but cblas.h is not found. "
+      echo "** Assuming openblas is aleady in a default include path, but"
+      echo "** if you get compilation messages about not finding files like cblas.h,"
+      echo "** you should look into this (e.g. make sure to install the 'openblas-dev' package,"
+      echo "** if it is a package-based install)."
+      OPENBLASINCDIR="/usr/include"
+    fi
+    echo "Your math library seems to be OpenBLAS from $OPENBLASROOT.  Configuring appropriately."
+    OPENBLASLIBS="-L$OPENBLASLIBDIR -l:libopenblas.a -l:libblas.a -l:liblapack.a -l:libf2c.a"
     echo "OPENBLASINC = $OPENBLASINCDIR" >> kaldi.mk
     echo "OPENBLASLIBS = $OPENBLASLIBS" >> kaldi.mk
     echo >> kaldi.mk
