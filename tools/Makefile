@@ -78,25 +78,18 @@ else ifeq ($(OS),Windows_NT)
   # This new OS path is confirmed working on Windows 10 / Cygwin64.
   openfst_add_CXXFLAGS = -g -O2 -Wa,-mbig-obj
 else
-  openfst_add_CXXFLAGS = -g -O2
+  openfst_add_CXXFLAGS = -g -O3 -msse -msse2
 endif
 
 openfst-$(OPENFST_VERSION)/Makefile: openfst-$(OPENFST_VERSION)
 	cd openfst-$(OPENFST_VERSION)/ && \
+        autoreconf -i && \
 	./configure --prefix=`pwd` $(OPENFST_CONFIGURE) CXX="$(CXX)" \
 		CXXFLAGS="$(openfst_add_CXXFLAGS) $(CXXFLAGS)" \
 		LDFLAGS="$(LDFLAGS)" LIBS="-ldl"
 
-openfst-$(OPENFST_VERSION): openfst-$(OPENFST_VERSION).tar.gz
-	tar xozf openfst-$(OPENFST_VERSION).tar.gz
-
-openfst-$(OPENFST_VERSION).tar.gz:
-	if [ -d "$(DOWNLOAD_DIR)" ]; then \
-	  cp -p "$(DOWNLOAD_DIR)/openfst-$(OPENFST_VERSION).tar.gz" .; \
-	else \
-	  $(WGET) -nv -T 10 -t 1 http://www.openfst.org/twiki/pub/FST/FstDownload/openfst-$(OPENFST_VERSION).tar.gz || \
-	  $(WGET) -nv -T 10 -t 3 -c https://www.openslr.org/resources/2/openfst-$(OPENFST_VERSION).tar.gz; \
-	fi
+openfst-$(OPENFST_VERSION):
+	git clone --single-branch https://github.com/alphacep/openfst openfst-$(OPENFST_VERSION)
 
 openfst_cleaned:
 	-for d in openfst/ openfst-*/; do \
