@@ -151,9 +151,10 @@ template<class Arc, class I>
 LookaheadFst<Arc, I> *LookaheadComposeFst(const Fst<Arc> &ifst1,
                                           const Fst<Arc> &ifst2,
                                           const std::vector<I> &to_remove) {
-  fst::CacheOptions cache_opts(true, 1 << 25LL);
-  fst::CacheOptions cache_opts_map(true, 0);
-  fst::ArcMapFstOptions arcmap_opts(cache_opts);
+  fst::CacheOptions cache_opts(true, 0);
+  fst::CacheOptions cache_opts_map(true, 1 << 26LL);
+  fst::ArcMapFstOptions arcmap_opts(cache_opts_map);
+
   RemoveSomeInputSymbolsMapper<Arc, I> mapper(to_remove);
   return new LookaheadFst<Arc, I>(ComposeFst<Arc>(ifst1, ifst2, cache_opts), mapper, arcmap_opts);
 }
