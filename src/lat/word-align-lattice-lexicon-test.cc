@@ -57,7 +57,7 @@ void GenerateLexicon(const std::vector<int32> &phones,
   }
   SortAndUniq(lexicon);
   // randomize the order.
-  std::random_shuffle(lexicon->begin(), lexicon->end());
+  std::shuffle(lexicon->begin(), lexicon->end(), std::mt19937(std::random_device()()));
 
 
   for (size_t i = 0; i < lexicon->size(); i++) {

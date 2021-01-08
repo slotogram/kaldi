@@ -71,7 +71,7 @@ void UnitTestSampleWithoutReplacement() {
     }
     int32 total_ceil = std::ceil(total);
     prob[num_elements - 1] =  total_ceil - total;
-    std::random_shuffle(prob.begin(), prob.end());
+    std::shuffle(prob.begin(), prob.end(), std::mt19937(std::random_device()()));
 
     std::vector<double> sample_total(prob.size());
     size_t l = 0;

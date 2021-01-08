@@ -1561,7 +1561,7 @@ static void GenerateRandomComponentConfig(std::string *component_type,
       std::vector<int32> column_map(input_dim);
       for (int32 i = 0; i < input_dim; i++)
         column_map[i] = i;
-      std::random_shuffle(column_map.begin(), column_map.end());
+      std::shuffle(column_map.begin(), column_map.end(), std::mt19937(std::random_device()()));
       std::ostringstream buffer;
       for (int32 i = 0; i < input_dim-1; i++)
         buffer << column_map[i] << ",";

@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
         egs.push_back(std::make_pair(example_reader.Key(),
                                     new NnetExample(example_reader.Value())));
 
-      std::random_shuffle(egs.begin(), egs.end());
+      std::shuffle(egs.begin(), egs.end(), std::mt19937(std::random_device()()));
     } else {
       KALDI_ASSERT(buffer_size > 0);
       egs.resize(buffer_size,

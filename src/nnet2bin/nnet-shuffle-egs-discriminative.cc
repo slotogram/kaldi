@@ -72,8 +72,8 @@ int main(int argc, char *argv[]) {
       for (; !example_reader.Done(); example_reader.Next())
         egs.push_back(new DiscriminativeNnetExample(
             example_reader.Value()));
-      
-      std::random_shuffle(egs.begin(), egs.end());
+
+      std::shuffle(egs.begin(), egs.end(), std::mt19937(std::random_device()()));
     } else {
       KALDI_ASSERT(buffer_size > 0);
       egs.resize(buffer_size, NULL);

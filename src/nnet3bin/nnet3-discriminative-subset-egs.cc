@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
       }
     }
     if (randomize_order)
-      std::random_shuffle(egs.begin(), egs.end());
+      std::shuffle(egs.begin(), egs.end(), std::mt19937(std::random_device()()));
 
     NnetDiscriminativeExampleWriter writer(examples_wspecifier);
     for (size_t i = 0; i < egs.size(); i++) {
