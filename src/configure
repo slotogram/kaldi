@@ -1351,6 +1351,9 @@ or try another math library, e.g. --mathlib=OPENBLAS (Kaldi may be slower)."
       *)        cat makefiles/linux_openblas.mk ;;
     esac >> kaldi.mk
 
+    echo >> kaldi.mk
+    echo "CXXFLAGS += -DUSE_KALDI_SVD" >> kaldi.mk
+
     echo "Successfully configured for Linux with OpenBLAS from $OPENBLASROOT"
   else
     failure "Unsupported linear algebra library '$MATHLIB'"
