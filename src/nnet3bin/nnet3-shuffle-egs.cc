@@ -18,6 +18,7 @@
 // See the Apache 2 License for the specific language governing permissions and
 // limitations under the License.
 
+#include <random>
 #include "base/kaldi-common.h"
 #include "util/common-utils.h"
 #include "hmm/transition-model.h"
@@ -50,8 +51,6 @@ int main(int argc, char *argv[]) {
 
     po.Read(argc, argv);
 
-    srand(srand_seed);
-
     if (po.NumArgs() != 2) {
       po.PrintUsage();
       exit(1);
@@ -74,7 +73,7 @@ int main(int argc, char *argv[]) {
         egs.push_back(std::make_pair(example_reader.Key(),
                                     new NnetExample(example_reader.Value())));
 
-      std::shuffle(egs.begin(), egs.end(), std::mt19937(std::random_device()()));
+      std::shuffle(egs.begin(), egs.end(), std::mt19937(srand_seed));
     } else {
       KALDI_ASSERT(buffer_size > 0);
       egs.resize(buffer_size,

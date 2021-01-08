@@ -47,11 +47,9 @@ int main(int argc, char *argv[]) {
     po.Register("n", &n, "Number of examples to output");
     po.Register("randomize-order", &randomize_order, "If true, randomize the order "
                 "of the output");
-    
+
     po.Read(argc, argv);
-    
-    srand(srand_seed);
-    
+
     if (po.NumArgs() != 2) {
       po.PrintUsage();
       exit(1);
@@ -82,7 +80,7 @@ int main(int argc, char *argv[]) {
       }
     }
     if (randomize_order)
-      std::shuffle(egs.begin(), egs.end(), std::mt19937(std::random_device()()));
+      std::shuffle(egs.begin(), egs.end(), std::mt19937(srand_seed));
 
     NnetExampleWriter writer(examples_wspecifier);
     for (size_t i = 0; i < egs.size(); i++) {

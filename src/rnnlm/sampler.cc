@@ -20,6 +20,7 @@
 #include <algorithm>
 #include <numeric>
 #include <queue>
+#include <random>
 #include "rnnlm/sampler.h"
 #include "base/kaldi-math.h"
 #include "util/stl-utils.h"

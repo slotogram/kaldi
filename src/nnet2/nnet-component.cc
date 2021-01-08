@@ -23,6 +23,7 @@
 
 #include <iterator>
 #include <sstream>
+#include <random>
 #include "nnet2/nnet-component.h"
 #include "nnet2/nnet-precondition.h"
 #include "nnet2/nnet-precondition-online.h"

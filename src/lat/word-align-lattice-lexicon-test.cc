@@ -59,7 +59,6 @@ void GenerateLexicon(const std::vector<int32> &phones,
   // randomize the order.
   std::shuffle(lexicon->begin(), lexicon->end(), std::mt19937(std::random_device()()));
 
-
   for (size_t i = 0; i < lexicon->size(); i++) {
     if ((*lexicon)[i].size() > 2) {
       // ok, this lexicon has at least one nonempty word: potentially OK.  Do

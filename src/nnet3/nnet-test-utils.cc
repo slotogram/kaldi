@@ -21,6 +21,7 @@
 
 #include <iterator>
 #include <sstream>
+#include <random>
 #include "nnet3/nnet-test-utils.h"
 #include "nnet3/nnet-utils.h"
 

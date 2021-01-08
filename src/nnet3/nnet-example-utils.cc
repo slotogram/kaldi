@@ -24,6 +24,7 @@
 #include "util/text-utils.h"
 #include <numeric>
 #include <iomanip>
+#include <random>
 
 namespace kaldi {
 namespace nnet3 {

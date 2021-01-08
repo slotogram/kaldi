@@ -22,6 +22,7 @@
 #include <vector>
 #include <algorithm>
 #include <utility>
+#include <random>
 
 namespace kaldi {
 namespace nnet1 {
@@ -30,14 +31,14 @@ namespace nnet1 {
 
 void RandomizerMask::Init(const NnetDataRandomizerOptions& conf) {
   KALDI_LOG << "Seeding by srand with : " << conf.randomizer_seed;
-  srand(conf.randomizer_seed);
+  mt.seed(conf.randomizer_seed);
 }
 
 const std::vector<int32>& RandomizerMask::Generate(int32 mask_size) {
   mask_.resize(mask_size);
   for (int32 i = 0; i < mask_size; i++) mask_[i] = i;
   // shuffle using built-in random generator:
-  std::shuffle(mask_.begin(), mask_.end(), std::mt19937(std::random_device()()));
+  std::shuffle(mask_.begin(), mask_.end(), mt);
   return mask_;
 }
 

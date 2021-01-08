@@ -23,6 +23,7 @@
 
 #include <utility>
 #include <vector>
+#include <random>
 
 #include "base/kaldi-math.h"
 #include "itf/options-itf.h"
@@ -78,6 +79,7 @@ class RandomizerMask {
 
  private:
   std::vector<int32> mask_;
+  std::mt19937 mt;
 };
 
 
