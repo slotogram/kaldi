@@ -390,7 +390,7 @@ class ArcIterator< TrivialFactorWeightFst<A, F> >
 template <class A, class F>
 inline void TrivialFactorWeightFst<A, F>::InitStateIterator(
     StateIteratorData<A> *data) const {
-  data->base = new StateIterator< TrivialFactorWeightFst<A, F> >(*this);
+  data->base = fst::make_unique<StateIterator<TrivialFactorWeightFst<A, F> > >(*this);
 }
 
 
