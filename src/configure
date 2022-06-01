@@ -1292,6 +1292,7 @@ or try another math library, e.g. --mathlib=OPENBLAS (Kaldi may be slower)."
       aarch64*) cat makefiles/linux_openblas_aarch64.mk ;;
       arm*)     cat makefiles/linux_openblas_arm.mk ;;
       ppc64le)  cat makefiles/linux_openblas_ppc64le.mk ;;
+      riscv64)  cat makefiles/linux_openblas_riscv64.mk ;;
       *)        cat makefiles/linux_openblas.mk ;;
     esac >> kaldi.mk
 
@@ -1348,6 +1349,7 @@ or try another math library, e.g. --mathlib=OPENBLAS (Kaldi may be slower)."
       aarch64*) cat makefiles/linux_openblas_aarch64.mk ;;
       arm*)     cat makefiles/linux_openblas_arm.mk ;;
       ppc64le)  cat makefiles/linux_openblas_ppc64le.mk ;;
+      riscv64)  cat makefiles/linux_openblas_riscv64.mk ;;
       *)        cat makefiles/linux_openblas.mk ;;
     esac >> kaldi.mk
 
