@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.18)
+cmake_minimum_required(VERSION 3.13)
 project(kaldi)
 
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
@@ -22,8 +22,6 @@ endif()
 
 include(third_party/get_third_party)
 
-include(cmake/third_party/openfst.cmake)
-
 find_package(PythonInterp)
 if(NOT PYTHON_EXECUTABLE)
     message(FATAL_ERROR "Needs python to auto-generate most CMake files, but not found.")
@@ -43,7 +41,7 @@ execute_process(COMMAND ${PYTHON_EXECUTABLE}
 )
 unset(IS_LIB_SHARE)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_INSTALL_MESSAGE LAZY) # hide "-- Up-to-date: ..."
 if(BUILD_SHARED_LIBS)

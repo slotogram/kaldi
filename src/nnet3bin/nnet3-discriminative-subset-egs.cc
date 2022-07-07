@@ -46,11 +46,9 @@ int main(int argc, char *argv[]) {
     po.Register("n", &n, "Number of examples to output");
     po.Register("randomize-order", &randomize_order, "If true, randomize the order "
                 "of the output");
-    
+
     po.Read(argc, argv);
-    
-    srand(srand_seed);
-    
+
     if (po.NumArgs() != 2) {
       po.PrintUsage();
       exit(1);
@@ -81,16 +79,16 @@ int main(int argc, char *argv[]) {
       }
     }
     if (randomize_order)
-      std::random_shuffle(egs.begin(), egs.end());
+      std::shuffle(egs.begin(), egs.end(), std::mt19937(srand_seed));
 
     NnetDiscriminativeExampleWriter writer(examples_wspecifier);
     for (size_t i = 0; i < egs.size(); i++) {
       writer.Write(egs[i].first, egs[i].second);
     }
-    
+
     KALDI_LOG << "Selected a subset of " << egs.size() << " out of " << num_read
               << " neural-network discriminative training examples ";
-    
+
     return (num_read != 0 ? 0 : 1);
   } catch(const std::exception &e) {
     std::cerr << e.what() << '\n';

@@ -20,6 +20,7 @@
 #include <algorithm>
 #include <numeric>
 #include <queue>
+#include <random>
 #include "rnnlm/sampler.h"
 #include "base/kaldi-math.h"
 #include "util/stl-utils.h"
@@ -52,7 +53,7 @@ void SampleWithoutReplacement(const std::vector<double> &probs,
     // matter for most applications.
     std::vector<int32> order(n);
     for (int32 i = 0; i < n; i++) order[i] = i;
-    std::random_shuffle(order.begin(), order.end());
+    std::shuffle(order.begin(), order.end(), std::mt19937(std::random_device()()));
 #endif
 
     double r = RandUniform();  // r <= 0 <= 1.

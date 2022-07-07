@@ -17,6 +17,7 @@
 // See the Apache 2 License for the specific language governing permissions and
 // limitations under the License.
 
+#include <random>
 #include "nnet3/convolution.h"
 #include "util/common-utils.h"
 
@@ -60,7 +61,7 @@ start:
     }
     SortAndUniq(&(model->offsets));
     SortAndUniq(&all_time_offsets);
-    std::random_shuffle(all_time_offsets.begin(), all_time_offsets.end());
+    std::shuffle(all_time_offsets.begin(), all_time_offsets.end(), std::mt19937(std::random_device()()));
     int32 num_required_offsets = RandInt(1, all_time_offsets.size());
     for (int32 i = 0; i < num_required_offsets; i++)
       model->required_time_offsets.insert(all_time_offsets[i]);

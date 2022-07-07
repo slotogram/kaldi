@@ -17,6 +17,8 @@
 // MERCHANTABLITY OR NON-INFRINGEMENT.
 // See the Apache 2 License for the specific language governing permissions and
 // limitations under the License.
+
+#include <random>
 #include "base/io-funcs.h"
 #include "util/kaldi-io.h"
 #include "base/kaldi-math.h"
@@ -854,7 +856,7 @@ void UnitTestRangesMatrix(bool binary) {
     archive_contents[i].second.SetRandn();
   }
   if (RandInt(0, 1) == 0)
-    std::random_shuffle(archive_contents.begin(), archive_contents.end());
+    std::shuffle(archive_contents.begin(), archive_contents.end(), std::mt19937(std::random_device()()));
 
   std::ostringstream writer_name;
   writer_name << "ark,scp";

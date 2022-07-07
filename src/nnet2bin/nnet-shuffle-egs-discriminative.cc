@@ -45,11 +45,9 @@ int main(int argc, char *argv[]) {
     po.Register("buffer-size", &buffer_size, "If >0, size of a buffer we use "
                 "to do limited-memory partial randomization.  Otherwise, do "
                 "full randomization.");
-    
+
     po.Read(argc, argv);
 
-    srand(srand_seed);
-    
     if (po.NumArgs() != 2) {
       po.PrintUsage();
       exit(1);
@@ -72,8 +70,8 @@ int main(int argc, char *argv[]) {
       for (; !example_reader.Done(); example_reader.Next())
         egs.push_back(new DiscriminativeNnetExample(
             example_reader.Value()));
-      
-      std::random_shuffle(egs.begin(), egs.end());
+
+      std::shuffle(egs.begin(), egs.end(), std::mt19937(srand_seed));
     } else {
       KALDI_ASSERT(buffer_size > 0);
       egs.resize(buffer_size, NULL);

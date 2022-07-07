@@ -49,8 +49,6 @@ int main(int argc, char *argv[]) {
 
     po.Read(argc, argv);
 
-    srand(srand_seed);
-
     if (po.NumArgs() != 2) {
       po.PrintUsage();
       exit(1);
@@ -81,7 +79,7 @@ int main(int argc, char *argv[]) {
       }
     }
     if (randomize_order)
-      std::random_shuffle(egs.begin(), egs.end());
+      std::shuffle(egs.begin(), egs.end(), std::mt19937(srand_seed));
 
     NnetChainExampleWriter writer(examples_wspecifier);
     for (size_t i = 0; i < egs.size(); i++) {

@@ -24,6 +24,7 @@
 #include "util/text-utils.h"
 #include <numeric>
 #include <iomanip>
+#include <random>
 
 namespace kaldi {
 namespace nnet3 {
@@ -710,7 +711,7 @@ void UtteranceSplitter::DistributeRandomlyUniform(int32 n, std::vector<int32> *v
   for (; i < size; i++) {
     (*vec)[i] = common_part;
   }
-  std::random_shuffle(vec->begin(), vec->end());
+  std::shuffle(vec->begin(), vec->end(), std::mt19937(std::random_device()()));
   KALDI_ASSERT(std::accumulate(vec->begin(), vec->end(), int32(0)) == n);
 }
 
