@@ -24,7 +24,11 @@
 #define KALDI_CUDA_DECODER_AUDIO_HOST_DEVICE_BUFFER_SIZE 16000 * 50
 
 #include "base/kaldi-utils.h"
+<<<<<<< HEAD
 #include "cudamatrix/cu-common.h"
+=======
+#include "cudamatrix/cu-device.h"
+>>>>>>> windows
 #include "lat/lattice-functions.h"
 #include "util/stl-utils.h"
 
@@ -33,7 +37,18 @@ namespace cuda_decoder {
 
 // Number of segments of a given length and shift in an utterance of total
 // length nsamples
+<<<<<<< HEAD
 int NumberOfSegments(int nsamples, int seg_length, int seg_shift);
+=======
+inline int NumberOfSegments(int nsamples, int seg_length, int seg_shift) {
+  KALDI_ASSERT(seg_shift > 0);
+  KALDI_ASSERT(seg_length >= seg_shift);
+  int r = seg_length - seg_shift;
+  if (nsamples <= seg_length) return 1;
+  int nsegments = ((nsamples - r) + seg_shift - 1) / seg_shift;
+  return nsegments;
+}
+>>>>>>> windows
 
 // Segmentation config struct, used in cuda pipelines
 struct CudaPipelineSegmentationConfig {
@@ -71,29 +86,39 @@ class CudaPipelineResult {
   CompactLattice clat_;
   CTMResult ctm_result_;
   BaseFloat offset_seconds_;
+<<<<<<< HEAD
   int32 segment_id_;
   bool is_last_segment_;
+=======
+>>>>>>> windows
 
  public:
   static constexpr int RESULT_TYPE_LATTICE = 1;
   static constexpr int RESULT_TYPE_CTM = 2;
 
+<<<<<<< HEAD
   CudaPipelineResult()
       : result_type_(0),
         offset_seconds_(0),
         segment_id_(0),
         is_last_segment_(false) {}
+=======
+  CudaPipelineResult() : result_type_(0), offset_seconds_(0) {}
+>>>>>>> windows
 
   int32 GetResultType() const { return result_type_; }
 
   bool HasValidResult() const { return result_type_; }
 
+<<<<<<< HEAD
   int32 GetSegmentID() const { return segment_id_; }
 
   bool IsLastSegment() const { return is_last_segment_; }
 
   BaseFloat GetTimeOffsetSeconds() const { return offset_seconds_; }
 
+=======
+>>>>>>> windows
   void SetLatticeResult(CompactLattice &&clat) {
     result_type_ |= RESULT_TYPE_LATTICE;
     // We can switch to std::forward if there's a use for lvalues
@@ -105,6 +130,7 @@ class CudaPipelineResult {
     ctm_result_ = std::move(ctm);
   }
 
+<<<<<<< HEAD
   CompactLattice *GetLatticeResult() {
     KALDI_ASSERT("Lattice result was not requested" &&
                  result_type_ & RESULT_TYPE_LATTICE);
@@ -115,6 +141,18 @@ class CudaPipelineResult {
     KALDI_ASSERT("CTM result was not requested" &&
                  result_type_ & RESULT_TYPE_CTM);
     return &ctm_result_;
+=======
+  const CompactLattice &GetLatticeResult() const {
+    KALDI_ASSERT("Lattice result was not requested" &&
+                 result_type_ & RESULT_TYPE_LATTICE);
+    return clat_;
+  }
+
+  const CTMResult &GetCTMResult() const {
+    KALDI_ASSERT("CTM result was not requested" &&
+                 result_type_ & RESULT_TYPE_CTM);
+    return ctm_result_;
+>>>>>>> windows
   }
 
   void SetTimeOffsetSeconds(BaseFloat offset_seconds) {
@@ -122,6 +160,7 @@ class CudaPipelineResult {
     offset_seconds_ = offset_seconds;
   }
 
+<<<<<<< HEAD
   void SetSegmentID(int segment_id) { segment_id_ = segment_id; }
   void SetAsLastSegment() { is_last_segment_ = true; }
 };
@@ -132,6 +171,12 @@ struct SegmentedLatticeCallbackParams {
   // Default constructor was deleted by KALDI_DISALLOW_COPY_AND_ASSIGN
   SegmentedLatticeCallbackParams() {}
 
+=======
+  BaseFloat GetTimeOffsetSeconds() const { return offset_seconds_; }
+};
+
+struct SegmentedLatticeCallbackParams {
+>>>>>>> windows
   std::vector<CudaPipelineResult> results;
 };
 
@@ -139,6 +184,7 @@ typedef std::function<void(SegmentedLatticeCallbackParams &params)>
     SegmentedResultsCallback;
 typedef std::function<void(CompactLattice &)> LatticeCallback;
 
+<<<<<<< HEAD
 struct CallbackWithOptions {
   CallbackWithOptions(SegmentedResultsCallback&& cb, int rt) noexcept
     : callback{std::move(cb)}, result_type(rt) {}
@@ -149,6 +195,8 @@ struct CallbackWithOptions {
   bool is_last_segment;
 };
 
+=======
+>>>>>>> windows
 struct HostDeviceVector {
   cudaEvent_t evt;
   BaseFloat *h_data;
@@ -199,6 +247,7 @@ struct HostDeviceVector {
     }
   }
 };
+<<<<<<< HEAD
 
 // Write all lattices in results using clat_writer
 // If print_offsets is true, will write each lattice
@@ -216,6 +265,10 @@ void MergeSegmentsToCTMOutput(std::vector<CudaPipelineResult> &results,
                               fst::SymbolTable *word_syms = NULL,
                               bool use_segment_offsets = true);
 }  // namespace cuda_decoder
+=======
+}  // namespace cuda_decoder
+
+>>>>>>> windows
 }  // namespace kaldi
 
 #endif  // KALDI_CUDA_DECODER_CUDA_PIPELINE_COMMON_

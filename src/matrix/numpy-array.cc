@@ -36,6 +36,7 @@ constexpr bool kIsLittleEndian = false;
 constexpr bool kIsLittleEndian = true;
 #endif
 
+
 template <bool isLittleEndian>
 struct EndianString {
   static constexpr const char* value = isLittleEndian ? "<" : ">";

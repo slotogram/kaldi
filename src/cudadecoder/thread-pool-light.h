@@ -40,6 +40,7 @@ template <int QUEUE_SIZE>
 // Single producer, multiple consumer
 class ThreadPoolLightSPMCQueue {
   static constexpr unsigned int QUEUE_MASK = QUEUE_SIZE - 1;
+<<<<<<< HEAD
   std::vector<ThreadPoolLightTask> tasks_{QUEUE_SIZE};
   std::atomic<int> back_{0};
   std::atomic<int> front_{0};
@@ -47,6 +48,15 @@ class ThreadPoolLightSPMCQueue {
 
  public:
   ThreadPoolLightSPMCQueue() {
+=======
+  std::vector<ThreadPoolLightTask> tasks_;
+  std::atomic<int> back_;
+  std::atomic<int> front_;
+  static int inc(int curr) { return ((curr + 1) & QUEUE_MASK); }
+
+ public:
+  ThreadPoolLightSPMCQueue() : tasks_(QUEUE_SIZE), front_(0), back_(0) {
+>>>>>>> windows
     KALDI_COMPILE_TIME_ASSERT(QUEUE_SIZE > 1);
     constexpr bool is_power_of_2 = ((QUEUE_SIZE & (QUEUE_SIZE - 1)) == 0);
     KALDI_COMPILE_TIME_ASSERT(is_power_of_2);  // validity of QUEUE_MASK
@@ -128,9 +138,14 @@ class ThreadPoolLightWorker final {
     other_ = other;
   }
   void Start() {
+<<<<<<< HEAD
     KALDI_ASSERT("Please call SetOtherWorkerToStealFrom() first" &&
                  !other_.expired());
     thread_ = std::thread(&ThreadPoolLightWorker::Work, this);
+=======
+    KALDI_ASSERT("Please call SetOtherWorkerToStealFrom() first" && !other_.expired());
+    thread_ = std::move(std::thread(&ThreadPoolLightWorker::Work, this));
+>>>>>>> windows
   }
   void Stop() {
     run_thread_ = false;

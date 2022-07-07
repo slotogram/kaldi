@@ -9,7 +9,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(OPENFSTLIB)\src\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>fst.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>fst_Win32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>

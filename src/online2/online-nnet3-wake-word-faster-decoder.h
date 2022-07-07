@@ -30,9 +30,18 @@
 
 namespace kaldi {
 
+<<<<<<< HEAD
 /// Extends the FasterDecoder's options with additional parameters
 /// (currently none).
 struct OnlineWakeWordFasterDecoderOpts : public FasterDecoderOptions {
+=======
+// Extends the definition of FasterDecoder's options to include additional
+// parameters.
+struct OnlineWakeWordFasterDecoderOpts : public FasterDecoderOptions {
+
+  OnlineWakeWordFasterDecoderOpts() {}
+
+>>>>>>> windows
   void Register(OptionsItf *opts, bool full) {
     FasterDecoderOptions::Register(opts, full);
   }
@@ -49,8 +58,14 @@ struct OnlineWakeWordFasterDecoderOpts : public FasterDecoderOptions {
 class OnlineWakeWordFasterDecoder : public FasterDecoder {
  public:
   OnlineWakeWordFasterDecoder(const fst::Fst<fst::StdArc> &fst,
+<<<<<<< HEAD
                               const OnlineWakeWordFasterDecoderOpts &opts)
       : FasterDecoder(fst, opts), opts_(opts) {}
+=======
+                              const OnlineWakeWordFasterDecoderOpts &opts,
+                              const TransitionModel &trans_model)
+      : FasterDecoder(fst, opts), opts_(opts), trans_model_(trans_model) {}
+>>>>>>> windows
 
   // Makes a linear graph, by tracing back from the last "immortal" token
   // to the previous one
@@ -65,6 +80,10 @@ class OnlineWakeWordFasterDecoder : public FasterDecoder {
   // and then (possibly multiple times) AdvanceDecoding().
   void InitDecoding();
 
+<<<<<<< HEAD
+=======
+  
+>>>>>>> windows
  private:
   // Returns a linear fst by tracing back the last N frames, beginning
   // from the best current token
@@ -79,6 +98,10 @@ class OnlineWakeWordFasterDecoder : public FasterDecoder {
   void UpdateImmortalToken();
 
   const OnlineWakeWordFasterDecoderOpts opts_;
+<<<<<<< HEAD
+=======
+  const TransitionModel &trans_model_; // needed for trans-id -> phone conversion
+>>>>>>> windows
   Token *immortal_tok_;      // "immortal" token means it's an ancestor of ...
   Token *prev_immortal_tok_; // ... all currently active tokens
   KALDI_DISALLOW_COPY_AND_ASSIGN(OnlineWakeWordFasterDecoder);

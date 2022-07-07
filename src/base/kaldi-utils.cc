@@ -23,7 +23,6 @@
 #include <cstdio>
 #include <thread>
 
-
 namespace kaldi {
 
 std::string CharToString(const char &c) {

@@ -174,5 +174,12 @@ bool EndpointDetected<LatticeIncrementalOnlineDecoderTpl<fst::VectorGrammarFst >
     BaseFloat frame_shift_in_seconds,
     const LatticeIncrementalOnlineDecoderTpl<fst::VectorGrammarFst > &decoder);
 
+template
+bool EndpointDetected<LatticeIncrementalOnlineDecoderTpl<fst::VectorGrammarFst > >(
+    const OnlineEndpointConfig &config,
+    const TransitionModel &tmodel,
+    BaseFloat frame_shift_in_seconds,
+    const LatticeIncrementalOnlineDecoderTpl<fst::VectorGrammarFst > &decoder);
+
 
 }  // namespace kaldi

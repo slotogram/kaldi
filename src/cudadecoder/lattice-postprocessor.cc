@@ -16,7 +16,10 @@
 // limitations under the License.
 
 #include "cudadecoder/lattice-postprocessor.h"
+<<<<<<< HEAD
 
+=======
+>>>>>>> windows
 #include "fstext/fstext-lib.h"
 #include "lat/kaldi-lattice.h"
 #include "lat/lattice-functions.h"
@@ -54,9 +57,12 @@ void LatticePostprocessor::ApplyConfig() {
 
 bool LatticePostprocessor::GetPostprocessedLattice(
     CompactLattice &clat, CompactLattice *out_clat) const {
+<<<<<<< HEAD
   // Nothing to do for empty lattice
   if (clat.NumStates() == 0) return true;
 
+=======
+>>>>>>> windows
   bool ok = true;
   // Scale lattice
   if (use_lattice_scale_) fst::ScaleLattice(lattice_scales_, &clat);
@@ -81,20 +87,30 @@ bool LatticePostprocessor::GetPostprocessedLattice(
   if (!word_info_)
     KALDI_ERR << "You must set --word-boundary-rxfilename in the lattice "
                  "postprocessor config";
+<<<<<<< HEAD
   // ok &=
   // Ignoring the return false for now (but will print a warning),
   // because the doc says we can, and it can happen when using endpointing
   WordAlignLattice(clat, *tmodel_, *word_info_, max_states, out_clat);
+=======
+
+  ok &= WordAlignLattice(clat, *tmodel_, *word_info_, max_states, out_clat);
+>>>>>>> windows
   return ok;
 }
 
 bool LatticePostprocessor::GetCTM(CompactLattice &clat,
                                   CTMResult *ctm_result) const {
+<<<<<<< HEAD
   // Empty CTM output for empty lattice
   if (clat.NumStates() == 0) return true;
 
   CompactLattice postprocessed_lattice;
   GetPostprocessedLattice(clat, &postprocessed_lattice);
+=======
+  CompactLattice postprocessed_lattice;
+  if (!GetPostprocessedLattice(clat, &postprocessed_lattice)) return false;
+>>>>>>> windows
 
   // MBR
   MinimumBayesRisk mbr(postprocessed_lattice, config_.mbr_opts);
@@ -110,6 +126,7 @@ bool LatticePostprocessor::GetCTM(CompactLattice &clat,
 
   return true;
 }
+<<<<<<< HEAD
 
 void SetResultUsingLattice(
     CompactLattice &clat, const int result_type,
@@ -135,6 +152,8 @@ void SetResultUsingLattice(
   }
 }
 
+=======
+>>>>>>> windows
 }  // namespace cuda_decoder
 }  // namespace kaldi
 

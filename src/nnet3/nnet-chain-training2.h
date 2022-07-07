@@ -75,6 +75,9 @@ class NnetChainModel2 {
 
   const chain::DenominatorGraph *GetDenGraphForLang(const std::string &lang);
 
+  /* fst::StdVectorFst *GetDenFstForLang(const std::string &language_name); */
+  const chain::DenominatorGraph *GetDenGraphForLang(const std::string &lang);
+
  private:
   // struct LanguageInfo contains the data that is stored per language.
   // transform comes from <transform_dir>/<language_name>.ada
@@ -97,6 +100,7 @@ class NnetChainModel2 {
   const LanguageInfo *GetInfoForLang(const std::string &lang);
 
   Nnet *nnet_;
+
   // Directory where denominator FSTs are located.
   std::string den_fst_dir_;
 

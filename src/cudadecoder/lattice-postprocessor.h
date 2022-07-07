@@ -23,6 +23,10 @@
 #include "base/kaldi-common.h"
 #include "base/kaldi-utils.h"
 #include "cudadecoder/cuda-pipeline-common.h"
+<<<<<<< HEAD
+=======
+#include "cudamatrix/cu-device.h"
+>>>>>>> windows
 #include "fstext/fstext-lib.h"
 #include "lat/kaldi-lattice.h"
 #include "lat/sausages.h"
@@ -72,10 +76,19 @@ struct LatticePostprocessorConfig {
 
 class LatticePostprocessor {
   const LatticePostprocessorConfig config_;
+<<<<<<< HEAD
   const TransitionInformation *tmodel_;
   std::shared_ptr<const WordBoundaryInfo> word_info_;
   BaseFloat decoder_frame_shift_;
   // Params for ScaleLattice.
+=======
+  const TransitionModel *tmodel_;
+  std::shared_ptr<const WordBoundaryInfo> word_info_;
+  BaseFloat decoder_frame_shift_;
+  // Params for align words
+  int32 max_states_;
+  // Params for ScaleLattice
+>>>>>>> windows
   bool use_lattice_scale_;
   std::vector<std::vector<double> > lattice_scales_;
 
@@ -86,7 +99,11 @@ class LatticePostprocessor {
   bool GetPostprocessedLattice(CompactLattice &clat,
                                CompactLattice *out_clat) const;
 
+<<<<<<< HEAD
   void SetTransitionInformation(const TransitionInformation *tmodel) { tmodel_ = tmodel; }
+=======
+  void SetTransitionModel(const TransitionModel *tmodel) { tmodel_ = tmodel; }
+>>>>>>> windows
 
   void SetWordBoundaryInfo(
       const std::shared_ptr<const WordBoundaryInfo> &word_info) {
@@ -102,6 +119,7 @@ class LatticePostprocessor {
                                                     word_boundary_rxfilename);
   }
 };
+<<<<<<< HEAD
 
 void SetResultUsingLattice(
     CompactLattice &clat, const int result_type,
@@ -122,6 +140,8 @@ void LoadAndSetLatticePostprocessor(const std::string &config_filename,
   cuda_pipeline->SetLatticePostprocessor(lattice_postprocessor);
 }
 
+=======
+>>>>>>> windows
 }  // namespace cuda_decoder
 }  // namespace kaldi
 

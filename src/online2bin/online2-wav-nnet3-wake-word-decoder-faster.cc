@@ -183,8 +183,13 @@ int main(int argc, char *argv[]) {
             decodable_info, feature_pipeline.InputFeature(),
             feature_pipeline.IvectorFeature());
 
+<<<<<<< HEAD
         OnlineWakeWordFasterDecoder decoder(*decode_fst, decoder_opts);
 
+=======
+        OnlineWakeWordFasterDecoder decoder(*decode_fst, decoder_opts,
+                                            trans_model);
+>>>>>>> windows
         OnlineTimer decoding_timer(utt);
 
         BaseFloat samp_freq = wave_data.SampFreq();

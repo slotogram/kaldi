@@ -20,6 +20,7 @@ SUBDIRS := base bin chain chainbin cudamatrix decoder		\
 CUDADECODER = cudafeat cudafeatbin cudadecoder cudadecoderbin
 
 MEMTESTDIRS = $(filter-out chainbin cudamatrix rnnlmbin, $(SUBDIRS))
+
 CUDAMEMTESTDIR = cudamatrix
 
 # Optional subdirectories
@@ -243,3 +244,4 @@ cudafeat:  cudamatrix feat gmm ivector online2
 cudafeatbin: cudafeat decoder hmm transform tree
 cudadecoder: cudafeat cudamatrix fstext gmm hmm lat matrix nnet3 online2 transform tree util
 cudadecoderbin: cudadecoder chain decoder feat ivector nnet2
+
