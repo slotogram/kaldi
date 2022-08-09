@@ -34,6 +34,8 @@
 #include "lat/confidence.h"
 #include "lat/word-align-lattice.h"
 #include <stdio.h>
+#include "fst/extensions/ngram/ngram-fst.h"
+
 
 using namespace std;
 namespace kaldi {

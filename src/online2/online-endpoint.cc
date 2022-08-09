@@ -20,6 +20,7 @@
 #include "online2/online-endpoint.h"
 #include "decoder/lattice-faster-online-decoder.h"
 #include "decoder/grammar-fst.h"
+#include "hmm/transition-model.h"
 
 namespace kaldi {
 

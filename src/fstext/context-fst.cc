@@ -270,9 +270,9 @@ void ComposeContext(const vector<int32> &disambig_syms_in,
   // any disambiguation symbol or symbol in the FST.
   int32 subseq_sym = 1;
   if (!all_syms.empty())
-    subseq_sym = std::max(subseq_sym, all_syms.back() + 1);
+    subseq_sym = (std::max)(subseq_sym, all_syms.back() + 1);
   if (!disambig_syms.empty())
-    subseq_sym = std::max(subseq_sym, disambig_syms.back() + 1);
+    subseq_sym = (std::max)(subseq_sym, disambig_syms.back() + 1);
 
   // if central_position == context_width-1, it's left-context, and no
   // subsequential symbol is needed.

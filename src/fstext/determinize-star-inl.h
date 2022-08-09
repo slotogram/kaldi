@@ -111,10 +111,10 @@ template<class Label, class StringId> class StringRepository {
   StringRepository() {
     // The following are really just constants but don't want to complicate compilation so make them
     // class variables.  Due to the brokenness of <limits>, they can't be accessed as constants.
-    string_end = (std::numeric_limits<StringId>::max() / 2) - 1;  // all hash values must be <= this.
-    no_symbol = (std::numeric_limits<StringId>::max() / 2);  // reserved for empty sequence.
-    single_symbol_start =  (std::numeric_limits<StringId>::max() / 2) + 1;
-    single_symbol_range =  std::numeric_limits<StringId>::max() - single_symbol_start;
+    string_end = ((std::numeric_limits<StringId>::max)() / 2) - 1;  // all hash values must be <= this.
+    no_symbol = ((std::numeric_limits<StringId>::max)() / 2);  // reserved for empty sequence.
+    single_symbol_start =  ((std::numeric_limits<StringId>::max)() / 2) + 1;
+    single_symbol_range =  (std::numeric_limits<StringId>::max)() - single_symbol_start;
   }
   void Destroy() {
     for (typename std::vector<std::vector<Label>* >::iterator iter = vec_.begin(); iter != vec_.end(); ++iter)

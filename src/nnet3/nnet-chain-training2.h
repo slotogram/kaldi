@@ -76,7 +76,7 @@ class NnetChainModel2 {
   const chain::DenominatorGraph *GetDenGraphForLang(const std::string &lang);
 
   /* fst::StdVectorFst *GetDenFstForLang(const std::string &language_name); */
-  const chain::DenominatorGraph *GetDenGraphForLang(const std::string &lang);
+  //const chain::DenominatorGraph *GetDenGraphForLang(const std::string &lang);
 
  private:
   // struct LanguageInfo contains the data that is stored per language.

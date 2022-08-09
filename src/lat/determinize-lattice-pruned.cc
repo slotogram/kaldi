@@ -947,7 +947,7 @@ template<class Weight, class IntType> class LatticeDeterminizerPruned {
         const Element &element = cur->second;
         // Note: we'll later include the term "forward_cost" in the
         // priority_cost.
-        task->priority_cost = std::min(task->priority_cost,
+        task->priority_cost = (std::min)(task->priority_cost,
                                        ConvertToCost(element.weight) +
                                        backward_costs_[element.state]);
         cur++;
@@ -1021,7 +1021,7 @@ template<class Weight, class IntType> class LatticeDeterminizerPruned {
       for (ArcIterator<ExpandedFst<Arc> > aiter(*ifst_, s);
            !aiter.Done(); aiter.Next()) {
         const Arc &arc = aiter.Value();
-        cost = std::min(cost,
+        cost = (std::min)(cost,
                         ConvertToCost(arc.weight) + backward_costs_[arc.nextstate]);
       }
     }

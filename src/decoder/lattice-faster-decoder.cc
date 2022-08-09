@@ -550,7 +550,7 @@ void LatticeFasterDecoderTpl<FST, Token>::ComputeFinalCosts(
   if (final_costs != NULL)
     final_costs->clear();
   const Elem *final_toks = toks_.GetList();
-  BaseFloat infinity = std::numeric_limits<BaseFloat>::infinity();
+  BaseFloat infinity = (std::numeric_limits<BaseFloat>::infinity)();
   BaseFloat best_cost = infinity,
       best_cost_with_final = infinity;
 
@@ -561,8 +561,8 @@ void LatticeFasterDecoderTpl<FST, Token>::ComputeFinalCosts(
     BaseFloat final_cost = fst_->Final(state).Value();
     BaseFloat cost = tok->tot_cost,
         cost_with_final = cost + final_cost;
-    best_cost = std::min(cost, best_cost);
-    best_cost_with_final = std::min(cost_with_final, best_cost_with_final);
+    best_cost = (std::min)(cost, best_cost);
+    best_cost_with_final = (std::min)(cost_with_final, best_cost_with_final);
     if (final_costs != NULL && final_cost != infinity)
       (*final_costs)[tok] = final_cost;
     final_toks = next;
@@ -616,7 +616,7 @@ void LatticeFasterDecoderTpl<FST, Token>::AdvanceDecoding(DecodableInterface *de
   KALDI_ASSERT(num_frames_ready >= NumFramesDecoded());
   int32 target_frames_decoded = num_frames_ready;
   if (max_num_frames >= 0)
-    target_frames_decoded = std::min(target_frames_decoded,
+    target_frames_decoded = (std::min)(target_frames_decoded,
                                      NumFramesDecoded() + max_num_frames);
   while (NumFramesDecoded() < target_frames_decoded) {
     if (NumFramesDecoded() % config_.prune_interval == 0) {
@@ -655,7 +655,7 @@ BaseFloat LatticeFasterDecoderTpl<FST, Token>::GetCutoff(Elem *list_head, size_t
   BaseFloat best_weight = std::numeric_limits<BaseFloat>::infinity();
   // positive == high cost == bad.
   size_t count = 0;
-  if (config_.max_active == std::numeric_limits<int32>::max() &&
+  if (config_.max_active == (std::numeric_limits<int32>::max)() &&
       config_.min_active == 0) {
     for (Elem *e = list_head; e != NULL; e = e->tail, count++) {
       BaseFloat w = static_cast<BaseFloat>(e->val->tot_cost);

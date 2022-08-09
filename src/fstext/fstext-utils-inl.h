@@ -44,7 +44,7 @@ typename Arc::Label HighestNumberedOutputSymbol(const Fst<Arc> &fst) {
     typename Arc::StateId s = siter.Value();
     for (ArcIterator<Fst<Arc> > aiter(fst, s); !aiter.Done();  aiter.Next()) {
       const Arc &arc = aiter.Value();
-      ans = std::max(ans, arc.olabel);
+      ans = (std::max)(ans, arc.olabel);
     }
   }
   return ans;
@@ -57,7 +57,7 @@ typename Arc::Label HighestNumberedInputSymbol(const Fst<Arc> &fst) {
     typename Arc::StateId s = siter.Value();
     for (ArcIterator<Fst<Arc> > aiter(fst, s); !aiter.Done();  aiter.Next()) {
       const Arc &arc = aiter.Value();
-      ans = std::max(ans, arc.ilabel);
+      ans = (std::max)(ans, arc.ilabel);
     }
   }
   return ans;

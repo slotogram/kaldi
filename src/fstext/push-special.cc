@@ -129,8 +129,8 @@ class PushSpecialClass {
         min_sum = sum;
         max_sum = sum;
       } else {
-        min_sum = std::min(min_sum, sum);
-        max_sum = std::max(max_sum, sum);
+        min_sum = (std::min)(min_sum, sum);
+        max_sum = (std::max)(max_sum, sum);
       }
    }
     KALDI_VLOG(4) << "min,max is " << min_sum << " " << max_sum;

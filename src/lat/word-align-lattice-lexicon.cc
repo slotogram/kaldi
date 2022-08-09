@@ -400,7 +400,7 @@ void LatticeLexiconWordAligner::ProcessEpsilonTransitions(
     // ourselves to the range of possible lengths for the epsilon symbol,
     // in the lexicon.
     min_num_phones = iter->second.first;
-    max_num_phones = std::min(iter->second.second, comp_state.NumPhones());
+    max_num_phones = (std::min)(iter->second.second, comp_state.NumPhones());
   } else if (comp_state.PhoneFreshness() == kFresh) {
     // only last phone is "fresh", so only consider the sequence of all
     // phones including the last one.
@@ -455,7 +455,7 @@ void LatticeLexiconWordAligner::ProcessWordTransitions(
         KALDI_ERR << "Word " << word_id << " is not present in the lexicon.";
       }
       min_num_phones = iter->second.first;
-      max_num_phones = std::min(iter->second.second,
+      max_num_phones = (std::min)(iter->second.second,
                                 comp_state.NumPhones());
     } else if (comp_state.PhoneFreshness() == kFresh) {
       // just the latest phone is new -> just try to process the
@@ -807,8 +807,8 @@ void WordAlignLatticeLexiconInfo::UpdateNumPhonesMap(
     num_phones_map_[word] = std::make_pair(num_phones, num_phones);
   else {
     std::pair<int32, int32> &pr = num_phones_map_[word];
-    pr.first = std::min(pr.first, num_phones); // update min-num-phones
-    pr.second = std::max(pr.second, num_phones); // update max-num-phones
+    pr.first = (std::min)(pr.first, num_phones); // update min-num-phones
+    pr.second = (std::max)(pr.second, num_phones); // update max-num-phones
     if (pr.first == 0 && word == 0)
       KALDI_ERR << "Zero word with empty pronunciation is not allowed.";
   }

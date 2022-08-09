@@ -235,7 +235,7 @@ inline bool HasBannedPrefixPlusDigits(SymbolTable *symTable, std::string prefix,
   assert(symTable != NULL);
   const char *prefix_ptr = prefix.c_str();
   size_t prefix_len = strlen(prefix_ptr);  // allowed to be zero but not encouraged.
-
+  
   for (SymbolTable::iterator siter = symTable->begin(); siter != symTable->end(); ++siter) {
     const std::string &sym = siter->Symbol();
 
@@ -527,7 +527,7 @@ void PreDeterminize(MutableFst<Arc> *fst,
     for (typename std::map<std::pair<StateId, ArcId>, size_t>::iterator m_iter = m_map.begin();
         m_iter != m_map.end();
         ++m_iter) {
-      n = std::max(n, (int64) m_iter->second);  // m_iter->second is of type size_t.
+      n = (std::max)(n, (int64) m_iter->second);  // m_iter->second is of type size_t.
     }
     // At this point n is the highest symbol-id (type size_t) of symbols we must add.
     n++;  // This is now the number of symbols we must add.
